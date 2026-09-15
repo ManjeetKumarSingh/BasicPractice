@@ -9,3 +9,7 @@
 # python -m pip install pytest
 # python -m pip install pytest-cov
 # python -m pip install pytest-mock
+
+# python -m pip install fastapi
+# python -m pip install uvicorn
+# python -m pip install pydantic
