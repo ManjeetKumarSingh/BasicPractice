@@ -7,6 +7,7 @@ class Item(BaseModel):
     price: float
     description: str = None
 
+
 app = FastAPI()
 
 
@@ -18,6 +19,7 @@ async def root():
 @app.get("/items/{item_id}")
 async def read_item(item_id: int, q: str = None):
     return {"item_id": item_id, "q": q}
+
 
 @app.post("/items")
 async def create_item(item: Item):
