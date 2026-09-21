@@ -1,7 +1,7 @@
 import asyncio
 import time
 
-
+# This function simulates fetching data asynchronously with a delay.
 async def fetch_data(name, sequence):
     print("--" * 40)
     print(f"{sequence}: Fetching data for {name}...")
@@ -12,7 +12,7 @@ async def fetch_data(name, sequence):
     print("--" * 20)
     return f"Data for {name}"
 
-
+# The main function that runs the asynchronous tasks concurrently.
 async def main():
     start = time.time()
     results = await asyncio.gather(
@@ -28,3 +28,5 @@ async def main():
 
 data = asyncio.run(main())
 print(data)
+
+
