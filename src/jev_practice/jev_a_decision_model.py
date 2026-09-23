@@ -1,0 +1,52 @@
+import os
+from dotenv import load_dotenv
+import requests
+
+load_dotenv()  # Load environment variables from .env file
+
+api_key = os.getenv("OPENROUTER_API_KEY")
+
+response = requests.post(
+    "https://openrouter.ai/api/alpha/decisions",
+    headers={
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+    },
+    json={
+        "model": "typesafe/jev-1.13",
+        "state": {
+            "customer_tier": "enterprise",
+            "ticket": "My checkout page shows a blank screen after I click Pay. I have tried two browsers.",
+        },
+        "questions": {
+            "is_bug": {
+                "type": "noul",
+                "instructions": "Is the customer reporting a software defect?",
+                "criteria": {
+                    "true": "The customer describes broken or unexpected product behavior.",
+                    "false": "The customer is asking a question or requesting a feature.",
+                },
+            },
+            "team": {
+                "type": "choice",
+                "instructions": "Which team should own this ticket?",
+                "criteria": {
+                    "payments": "Checkout, billing, or payment processing issues.",
+                    "frontend": "Rendering, layout, or browser compatibility issues.",
+                    "account": "Login, permissions, or profile issues.",
+                },
+            },
+            "urgency": {
+                "type": "score",
+                "instructions": "How urgent is this ticket?",
+                "criteria": [
+                    "Can wait for the next release",
+                    "Should be fixed this week",
+                    "Blocking revenue right now",
+                ],
+            },
+        },
+    },
+)
+
+print(response.json()["answers"])
